@@ -1,9 +1,9 @@
 package com.zhitong.mytestserver.netty;
 
 import com.alibaba.fastjson.JSON;
-import com.zhitong.feignserver.model.netty.BussinessHandlerContext;
-import com.zhitong.feignserver.model.netty.NettyHandler;
-import com.zhitong.feignserver.model.netty.RpcData;
+import com.zhitong.mytestserver.model.netty.BussinessHandlerContext;
+import com.zhitong.mytestserver.model.netty.NettyHandler;
+import com.zhitong.mytestserver.model.netty.RpcData;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;

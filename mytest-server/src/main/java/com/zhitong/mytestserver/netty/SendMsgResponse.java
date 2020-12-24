@@ -1,6 +1,6 @@
 package com.zhitong.mytestserver.netty;
 
-import com.zhitong.feignserver.model.netty.RpcData;
+import com.zhitong.mytestserver.model.netty.RpcData;
 import lombok.Data;
 
 /**

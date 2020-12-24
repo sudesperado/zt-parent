@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理界面</title>
+    <link rel="stylesheet" href="./bootvue/css/bootstrap.min.css">
+</head>
+<body>
+
+<!--导航-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">用户管理</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">欢迎：***</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="app">
+
+
+<!--中心布局-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>薪资</th>
+                    <th>电话号码</th>
+                    <th>操作</th>
+                </tr>
+                <tbody>
+                <tr v-for="user ,index in users" :key="user.id">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.salary }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td><button class="btn-danger">删除</button> &nbsp &nbsp <button class="btn-primary">修改</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="username">姓名</label>
+                <input type="text" class="form-control" id="username" placeholder="请输入姓名">
+            </div>
+            <div class="form-group">
+                <label for="age">年龄</label>
+                <input type="text" class="form-control" id="age" placeholder="请输入年龄">
+            </div>
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="text" class="form-control" id="email" placeholder="请输入邮箱">
+            </div>
+            <div class="form-group">
+                <label for="phone">电话</label>
+                <input type="text" class="form-control" id="phone" placeholder="请输入电话">
+            </div>
+
+            <button type="submit" class="btn btn-default">提交</button>
+            <button type="submit" class="btn btn-default">重置</button>
+        </form>
+    </div>
+
+</div>
+
+</div>
+
+<script src="./bootvue/js/vue.js"></script>
+<script src="./bootvue/js/axios.min.js"></script>
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+           users : [
+                {
+                    id:"1",
+                    name:"张三",
+                    age:12,
+                    salary: 12333,
+                    phone:"18656465484"
+                },{
+        id:"2",
+            name:"李四",
+            age:14,
+            salary: 124553,
+            phone:"18645646546"
+    },{
+        id:"3",
+            name:"王二麻",
+            age:22,
+            salary: 33333,
+            phone:"1548446546"
+    }
+    ]
+        } ,
+        methods: {
+
+        },
+        created(){
+            let  _this = this;
+            axios.get("http://localhost:10010/hello/api/getUsers").then(function (response) {
+                console.log(response.data);
+                _this.users = response.data;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -2,8 +2,8 @@ package com.zhitong.mytestserver.es.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.zhitong.feignserver.es.entity.User;
-import com.zhitong.feignserver.es.service.EsCrudService;
+import com.zhitong.mytestserver.es.entity.User;
+import com.zhitong.mytestserver.es.service.EsCrudService;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;

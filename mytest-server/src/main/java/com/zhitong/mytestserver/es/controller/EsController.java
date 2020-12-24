@@ -1,6 +1,6 @@
 package com.zhitong.mytestserver.es.controller;
 
-import com.zhitong.feignserver.es.service.EsCrudService;
+import com.zhitong.mytestserver.es.service.EsCrudService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

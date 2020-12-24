@@ -1,9 +1,10 @@
 package com.zhitong.mytestserver.transaction.service.impl;
 
-import com.zhitong.feignserver.model.Result;
-import com.zhitong.feignserver.transaction.dao.UserMapper;
-import com.zhitong.feignserver.transaction.entity.User;
-import com.zhitong.feignserver.transaction.service.UserService;
+
+import com.zhitong.mytestserver.model.Result;
+import com.zhitong.mytestserver.transaction.dao.UserMapper;
+import com.zhitong.mytestserver.transaction.entity.User;
+import com.zhitong.mytestserver.transaction.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
