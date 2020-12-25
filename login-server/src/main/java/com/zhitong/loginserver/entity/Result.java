@@ -1,4 +1,4 @@
-package com.zhitong.mytestserver.model;
+package com.zhitong.loginserver.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +29,13 @@ public class Result<T> {
     public Result filed(String message){
         this.code = 500;
         this.message = message;
+        return this;
+    }
+
+    public Result success(String message,T data){
+        this.code = 200;
+        this.message = message;
+        this.data = data;
         return this;
     }
 }

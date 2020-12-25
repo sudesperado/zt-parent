@@ -1,12 +1,16 @@
 package com.zhitong.mytestserver.contrller;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.zhitong.mytestserver.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author : subs
@@ -18,6 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/hello/api")
 public class FeignServerContrller {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     @RequestMapping(value = "/getStr",method = RequestMethod.GET)
@@ -49,6 +56,12 @@ public class FeignServerContrller {
         user3.setSalary("154485646");
         user3.setPhone("12654946");
         userList.add(user3);
+
+//        redisTemplate.opsForValue().set("userInfo",JSON.toJSONString(userList), 60*1 , TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("su",JSON.toJSONString(userList), 60*1 , TimeUnit.SECONDS);
+        System.out.println("==============");
+        Object userInfo = redisTemplate.opsForValue().get("su");
+        System.out.println(userInfo);
         return userList;
     }
 

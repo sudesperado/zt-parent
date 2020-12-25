@@ -1,5 +1,6 @@
+
 server:
-  port: 9000
+  port: 9001
 
 spring:
   datasource:
@@ -10,7 +11,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 
   application:
-    name: login-server
+    name: gateway-server
 
   redis:
     host: 139.186.75.113
