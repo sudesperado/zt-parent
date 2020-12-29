@@ -3,6 +3,7 @@ package com.zhitong.mytestserver.contrller;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.zhitong.mytestserver.model.User;
+import com.zhitong.mytestserver.service.IntervalTimerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,9 @@ public class FeignServerContrller {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private IntervalTimerService intervalTimerService;
 
 
     @RequestMapping(value = "/getStr",method = RequestMethod.GET)
@@ -62,6 +66,16 @@ public class FeignServerContrller {
         System.out.println("==============");
         Object userInfo = redisTemplate.opsForValue().get("su");
         System.out.println(userInfo);
+
+
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setAge(1);
+            user.setName("fgwaeg===="+i);
+            user.setId(i);
+            user.setPhone("15644646");
+            intervalTimerService.getIntervalTimer(user);
+        }
         return userList;
     }
 

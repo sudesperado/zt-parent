@@ -8,7 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@MapperScan(basePackages = "com.zhitong.mytestserver.*")
+@MapperScan(basePackages = "com.zhitong.mytestserver.dao")
 @EnableEurekaClient
 @EnableDiscoveryClient
 public class MytestServerApplication {
