@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="./bootvue/css/bootstrap.min.css">
+</head>
+<body>
+<!--页面背景-->
+<div class="bgk-image" style="background-image: url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.youmeitu.com%2FUpload%2F20200102%2F1577960593711076.jpg%3Fx-oss-process%3Dimage%2Fresize%2Cm_fill%2Cw_180%2Ch_270&refer=http%3A%2F%2Fwww.youmeitu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611818234&t=3fa7754c4a52e073ce12edbc7372ad5c')"></div>
+
+<div>
+
+<!--导航-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">智通教育欢迎您</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">欢迎：***</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--登录表单-->
+<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <div style="width:100%;text-align:center">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">请登录</h2>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="邮箱" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 记住
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+            </form>
+        </div>
+    </div>
+</div> <!-- /container -->
+
+</div>
+
+<script src="./bootvue/js/vue.js"></script>
+<script src="./bootvue/js/axios.min.js"></script>
+
+</body>
+</html>

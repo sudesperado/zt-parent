@@ -31,4 +31,11 @@ public class Result<T> {
         this.message = message;
         return this;
     }
+
+    public Result success(String message,T data){
+        this.code = 200;
+        this.message = message;
+        this.data = data;
+        return this;
+    }
 }

@@ -17,11 +17,11 @@ import java.util.Scanner;
 
 public class MpGenerator {
 
-    private static final String PROJECT_NAME = "edu-server";
+    private static final String PROJECT_NAME = "zt-parent";
 
-    private static final String PROJECT_DAL_NAME = "gateway-server";
+    private static final String PROJECT_DAL_NAME = "mytest-server";
 
-    private static final String PROJECT_DAL_BASE_PACKAGE = "com.zhitong.gatewayserver.modal";
+    private static final String PROJECT_DAL_BASE_PACKAGE = "com.zhitong.mytestserver";
 
 
     /**
