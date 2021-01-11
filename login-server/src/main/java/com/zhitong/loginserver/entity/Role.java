@@ -13,42 +13,35 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author su
- * @since 2020-12-25
+ * @since 2021-01-11
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class User implements Serializable {
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    /**
+     * 角色ID
+     */
+    @TableId(value = "role_id", type = IdType.AUTO)
+    private Integer roleId;
 
     /**
-     * 账号
+     * 角色名称
      */
-    private String username;
+    private String roleName;
 
     /**
-     * 密码
+     * 角色CODE
      */
-    private String password;
+    private String roleCode;
 
     /**
-     * 用户真实姓名
+     * 0-不可用 1可用
      */
-    private String realname;
-
-    /**
-     * 密码加盐
-     */
-    private String salt;
-
-    /**
-     * 是否注销:(0:已注销 1:未注销)
-     */
-    private Integer isDel;
+    private String state;
 
 
 }

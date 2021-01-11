@@ -1,5 +1,6 @@
 package com.zhitong.loginserver.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhitong.loginserver.entity.Result;
 import com.zhitong.loginserver.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -15,4 +16,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IUserService extends IService<User> {
 
     Result loginIn(String username, String password);
+
+    Result insertSelective(User user);
+
+    Result<JSONObject> toLogin(User loginUser);
 }

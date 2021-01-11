@@ -1,18 +1,14 @@
 package com.zhitong.loginserver.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhitong.loginserver.entity.Result;
+import com.zhitong.loginserver.entity.User;
 import com.zhitong.loginserver.service.IUserService;
-import io.jsonwebtoken.*;
+import com.zhitong.loginserver.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.List;
 
 /**
  * @author : subs
@@ -22,13 +18,14 @@ import java.util.List;
  * @date Date : 2020年12月25日 11:07
  */
 @RestController
-@RequestMapping("/api/login")
 public class LoginController {
+
+    private static final String ACCESS_KEY = "access_key";
 
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(value = "/loginIn",method = RequestMethod.GET)
+    @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
     public Result loginIn(@RequestParam("username") String username ,
                           @RequestParam("password") String password){
 
@@ -40,13 +37,24 @@ public class LoginController {
     public Result getUserInfo(HttpServletRequest httpServletRequest){
         //通过jwt解析用户信息
         try {
-            String auth = httpServletRequest.getHeaders("Auth").nextElement();
-            Claims zhangsan = Jwts.parser().setSigningKey("123456").parseClaimsJws(auth).getBody();
-            System.out.println(zhangsan);
-            return Result.newInstance().success("操作成功",zhangsan.toString());
+            String auth = httpServletRequest.getHeaders(ACCESS_KEY).nextElement();
+//            Claims zhangsan = Jwts.parser().setSigningKey(ACCESS_KEY).parseClaimsJws(auth).getBody();
+            String username = JwtUtil.getUsername(auth);
+            System.out.println(username);
+            return Result.newInstance().success("操作成功",username);
         } catch (Exception e) {
             return Result.newInstance().filed(e.toString());
         }
+    }
+
+    /**
+     * 登录
+     * @return
+     */
+    @PostMapping(value = "/userLogin")
+    @ResponseBody
+    public Result<JSONObject> toLogin(@RequestBody User loginUser) throws Exception {
+        return userService.toLogin(loginUser);
     }
 
 }

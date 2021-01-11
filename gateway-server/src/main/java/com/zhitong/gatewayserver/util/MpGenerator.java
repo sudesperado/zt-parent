@@ -19,9 +19,9 @@ public class MpGenerator {
 
     private static final String PROJECT_NAME = "zt-parent";
 
-    private static final String PROJECT_DAL_NAME = "mytest-server";
+    private static final String PROJECT_DAL_NAME = "login-server";
 
-    private static final String PROJECT_DAL_BASE_PACKAGE = "com.zhitong.mytestserver";
+    private static final String PROJECT_DAL_BASE_PACKAGE = "com.zhitong.loginserver";
 
 
     /**
