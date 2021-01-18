@@ -61,7 +61,7 @@ public class ShiroConfig {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();//拦截器, 配置不会被拦截的链接 顺序判断
         //filterChainDefinitionMap.put("/login","anon");    //所有匿名用户均可访问到Controller层的该方法下
         filterChainDefinitionMap.put("/userLogin","anon");
-        filterChainDefinitionMap.put("/api/register/**","anon");
+        filterChainDefinitionMap.put("/api/register/saveUser","anon");
         filterChainDefinitionMap.put("/image/**","anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/fonts/**","anon");

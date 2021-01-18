@@ -56,7 +56,8 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        User user  = (User) principalCollection.getPrimaryPrincipal();if (user == null) {
+        User user  = (User) principalCollection.getPrimaryPrincipal();
+        if (user == null) {
             log.error("授权失败，用户信息为空！！！");
             return null;
         }
@@ -85,11 +86,13 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String token = (String) authenticationToken.getCredentials();// 校验token有效性
-        String username = JwtUtil.getUsername(token);if (Strings.isNullOrEmpty(username)) {
+        // 校验token有效性
+        String token = (String) authenticationToken.getPrincipal();
+        String username = JwtUtil.getUsername(token);
+        if (Strings.isNullOrEmpty(username)) {
             throw new AuthenticationException("token非法无效!");
-        }// 查询用户信息
-        //验证用户账号/密码
+        }
+        //查询用户信息 验证用户账号/密码
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq("username",username);
         List<User> users = userMapper.selectList(userQueryWrapper);
@@ -101,6 +104,6 @@ public class MyShiroRealm extends AuthorizingRealm {
         if (user == null) {
             throw new AuthenticationException("用户不存在!");
         }
-        return new SimpleAuthenticationInfo(user,token, ByteSource.Util.bytes(user.getSalt()),getName());
+        return new SimpleAuthenticationInfo(user,user.getPassword(), ByteSource.Util.bytes(user.getSalt()),getName());
     }
 }

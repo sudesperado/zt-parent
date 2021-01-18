@@ -61,7 +61,21 @@ public class JwtUtil {
     }
 
     /**
-     * 生成签名,5min(分钟)后过期
+     * 根据token 反编译出信息
+     * @return token中包含的密码
+     */
+    public static String getPassword(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("password").asString();
+        } catch (JWTDecodeException e) {
+            log.error("error：{}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 生成签名,30min(分钟)后过期
      * @param username 用户名
      * @param secret   用户的密码
      * @return 加密的token
@@ -72,6 +86,7 @@ public class JwtUtil {
         // 附带username信息
         return JWT.create()
                 .withClaim("username", username)
+                .withClaim("password",secret)
                 .withExpiresAt(date)
                 .sign(algorithm);
     }

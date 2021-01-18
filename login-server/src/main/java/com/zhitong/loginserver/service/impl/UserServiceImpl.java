@@ -8,7 +8,11 @@ import com.zhitong.loginserver.mapper.UserMapper;
 import com.zhitong.loginserver.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhitong.loginserver.util.JwtUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -63,7 +67,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Result insertSelective(User user) {
         //将uuid设置为密码盐值
         String salt = UUID.randomUUID().toString().replaceAll("-","");
-        SimpleHash simpleHash = new SimpleHash("MD5", user.getPassword(), salt, 8);
+        ByteSource salt2 = ByteSource.Util.bytes(salt);
+        SimpleHash simpleHash = new SimpleHash("MD5", user.getPassword(), salt2, 8);
         user.setPassword(simpleHash.toHex()).setSalt(salt);
         userMapper.insert(user);
         return Result.newInstance().success("200",user);
@@ -83,13 +88,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return Result.newInstance().filed("用户不存在");
         }
         //我的密码是使用uuid作为盐值加密的，所以这里登陆时候还需要做一次对比
-        SimpleHash simpleHash = new SimpleHash("MD5", passWord,  user.getSalt(), 8);
+        SimpleHash simpleHash = new SimpleHash("MD5", passWord, ByteSource.Util.bytes(user.getSalt()), 8);
         if(!simpleHash.toHex().equals(user.getPassword())){
             return Result.newInstance().filed("密码不正确");
         }
         // 生成token
         String token = JwtUtil.sign(userName, passWord);
-//        redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token,JwtUtil.EXPIRE_TIME / 1000);
         JSONObject obj = new JSONObject();
         obj.put("token", token);
         obj.put("userInfo", user);

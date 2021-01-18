@@ -37,11 +37,12 @@ public class LoginController {
     public Result getUserInfo(HttpServletRequest httpServletRequest){
         //通过jwt解析用户信息
         try {
-            String auth = httpServletRequest.getHeaders(ACCESS_KEY).nextElement();
-//            Claims zhangsan = Jwts.parser().setSigningKey(ACCESS_KEY).parseClaimsJws(auth).getBody();
-            String username = JwtUtil.getUsername(auth);
-            System.out.println(username);
-            return Result.newInstance().success("操作成功",username);
+//            String auth = httpServletRequest.getHeaders(ACCESS_KEY).nextElement();
+////            Claims zhangsan = Jwts.parser().setSigningKey(ACCESS_KEY).parseClaimsJws(auth).getBody();
+//            String username = JwtUtil.getUsername(auth);
+//            System.out.println(username);
+            System.out.println("===========================");
+            return Result.newInstance().success("操作成功","jj");
         } catch (Exception e) {
             return Result.newInstance().filed(e.toString());
         }

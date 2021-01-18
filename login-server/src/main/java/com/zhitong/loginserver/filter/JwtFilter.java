@@ -4,6 +4,7 @@ import com.zhitong.loginserver.entity.CommonConstant;
 import com.zhitong.loginserver.shiro.JwtToken;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.util.AntPathMatcher;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         }
         //如果存在,则进入executeLogin方法执行登入,检查token 是否正确
         try {
-            executeLogin(request, response);return true;
+            executeLogin(request, response);
+            return true;
         } catch (Exception e) {
             throw new AuthenticationException("Token失效请重新登录");
         }
@@ -54,19 +56,19 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         log.info("JwtFilter-->>>isLoginAttempt-Method:init()");
         HttpServletRequest req = (HttpServletRequest) request;
-        if(antPathMatcher.match("/userLogin",req.getRequestURI())){
+        if(antPathMatcher.match("/userLogin",req.getRequestURI()) || antPathMatcher.match("/api/**",req.getRequestURI())){
             return true;
         }
-        String token = req.getHeader(CommonConstant.ACCESS_TOKEN);
-        if (token == null) {
-            return false;
-        }
+//        String token = req.getHeader(CommonConstant.ACCESS_TOKEN);
+//        if (token != null) {
+//            return false;
+//        }
 //        Object o = redisUtil.get(CommonConstant.PREFIX_USER_TOKEN + token);
 //        if(ObjectUtils.isEmpty(o)){
 //            return false;
 //        }
         log.info("JwtFilter-->>>isLoginAttempt-Method:返回true");
-        return true;
+        return false;
     }
 
     /**
@@ -76,10 +78,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         log.info("JwtFilter-->>>executeLogin-Method:init()");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(CommonConstant.ACCESS_TOKEN);//Access-Token
+        String token = httpServletRequest.getHeader(CommonConstant.ACCESS_TOKEN);
         JwtToken jwtToken = new JwtToken(token);
         // 提交给realm进行登入,如果错误他会抛出异常并被捕获, 反之则代表登入成功,返回true
-        getSubject(request, response).login(jwtToken);return true;
+        getSubject(request, response).login(jwtToken);
+        return true;
     }
 
     /**
