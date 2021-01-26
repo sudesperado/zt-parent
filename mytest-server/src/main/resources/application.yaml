@@ -16,7 +16,7 @@ spring:
     host: 139.186.75.113
     port: 6379
     database: 0
-    timeout: 500
+    timeout: 5000
 
   rabbitmq:
     host: 139.186.75.113
@@ -37,7 +37,7 @@ netty:
     port: 12300
     host: 172.37.0.122
 
-#¿ÉÌí¼Óes¼¯Èº,ÓÃ","¸ô¿ª
+#ï¿½ï¿½ï¿½ï¿½ï¿½esï¿½ï¿½Èº,ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½
 elasticsearch:
   address: localhost:9200
 

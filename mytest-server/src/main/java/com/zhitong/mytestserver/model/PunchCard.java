@@ -2,13 +2,14 @@ package com.zhitong.mytestserver.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.google.inject.internal.cglib.core.$ObjectSwitchCallback;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -65,6 +66,16 @@ public class PunchCard implements Serializable {
 
     @TableField(exist = false)
     private LocalDateTime createTime;
+
+    /**
+     * 开始时间
+     */
+    @TableField(exist = false)
+    private Date start;
+
+    @TableField(exist = false)
+    private Date end;
+
 
 
 }

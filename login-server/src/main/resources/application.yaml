@@ -17,9 +17,15 @@ spring:
     host: 139.186.75.113
     port: 6379
     database: 0
-    timeout: 500
+    timeout: 5000
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:7001/eureka/
+
+zuul:
+  routes:
+    hello:
+      path: /api/**
+      url: http://127.0.0.1:10010/api

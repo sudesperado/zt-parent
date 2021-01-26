@@ -1,5 +1,6 @@
 package com.zhitong.loginserver.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zhitong.loginserver.entity.Result;
@@ -8,17 +9,16 @@ import com.zhitong.loginserver.mapper.UserMapper;
 import com.zhitong.loginserver.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhitong.loginserver.util.JwtUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -36,6 +36,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public Result loginIn(String username, String password) {
         //验证用户账号/密码
@@ -51,14 +54,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         //通过验证 生成token返回
-//        JwtBuilder jwtBuilder = Jwts.builder()
-//                .setId(UUID.randomUUID().toString())
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
-//                .setSubject(username)
-//                .claim("userInfo", JSON.toJSONString(user))
-//                .setIssuedAt(new Date())
-//                .signWith(SignatureAlgorithm.HS256, ACCESS_KEY);
-//        String compact = jwtBuilder.compact();
         String sign = JwtUtil.sign(username, password);
         return Result.newInstance().success("操作成功",sign);
     }
@@ -94,9 +89,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         // 生成token
         String token = JwtUtil.sign(userName, passWord);
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(user),5, TimeUnit.MINUTES);
         JSONObject obj = new JSONObject();
         obj.put("token", token);
-        obj.put("userInfo", user);
         return Result.newInstance().success("登录成功",obj);
     }
 }

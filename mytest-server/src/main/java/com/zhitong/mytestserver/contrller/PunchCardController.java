@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,9 +33,17 @@ public class PunchCardController {
      * @param punchCardList
      * @return
      */
+    @CrossOrigin
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Result savePunchCard(@RequestBody List<PunchCard> punchCardList){
         try {
+            punchCardList.stream().forEach(item->{
+                if (item.getStart()!=null && item.getEnd()!=null){
+                    String st = new SimpleDateFormat("yyyy-MM-dd").format(item.getStart());
+                    String en = new SimpleDateFormat("yyyy-MM-dd").format(item.getEnd());
+                    item.setPeriod(st+"~"+en);
+                }
+            });
             return punchCardService.savePunchCard(punchCardList);
         } catch (Exception e) {
             logger.error("添加打卡记录失败：{}",e);
@@ -48,8 +57,9 @@ public class PunchCardController {
      * @param week
      * @return
      */
+    @CrossOrigin
     @RequestMapping(value = "/queryAll",method = RequestMethod.GET)
-    public Result queryAll(@RequestParam(value = "userId") String userId,
+    public Result queryAll(@RequestParam(value = "userId",required = false) String userId,
                            @RequestParam(value = "week",required = false) Integer week){
         try {
             return punchCardService.queryAll(userId,week);
@@ -64,6 +74,7 @@ public class PunchCardController {
      * @param ids
      * @return
      */
+    @CrossOrigin
     @RequestMapping(value = "/del",method = RequestMethod.GET)
     public Result del(@RequestParam(value = "ids") String ids){
         List<String> idList = Arrays.asList(ids.split(","));
@@ -74,5 +85,6 @@ public class PunchCardController {
             return Result.newInstance().filed("批量删除失败!");
         }
     }
+
 
 }

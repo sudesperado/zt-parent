@@ -33,6 +33,7 @@ public class LoginController {
         return userService.loginIn(username,password);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/getUserInfo",method = RequestMethod.GET)
     public Result getUserInfo(HttpServletRequest httpServletRequest){
         //通过jwt解析用户信息
@@ -52,6 +53,7 @@ public class LoginController {
      * 登录
      * @return
      */
+    @CrossOrigin
     @PostMapping(value = "/userLogin")
     @ResponseBody
     public Result<JSONObject> toLogin(@RequestBody User loginUser) throws Exception {

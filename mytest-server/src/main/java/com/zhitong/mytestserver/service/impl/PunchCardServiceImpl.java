@@ -1,8 +1,7 @@
 package com.zhitong.mytestserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.google.common.collect.Lists;
 import com.zhitong.mytestserver.model.PunchCard;
 import com.zhitong.mytestserver.dao.PunchCardMapper;
@@ -41,13 +40,15 @@ public class PunchCardServiceImpl extends ServiceImpl<PunchCardMapper, PunchCard
 
     @Override
     public Result queryAll(String userId, Integer week) {
-        Long uid = Long.valueOf(userId);
         QueryWrapper<PunchCard> cardQueryWrapper = new QueryWrapper<>();
-        cardQueryWrapper.eq("user_id", uid);
+        if (StringUtils.isNotEmpty(userId)){
+            Long uid = Long.valueOf(userId);
+            cardQueryWrapper.eq("user_id", uid);
+        }
         cardQueryWrapper.eq(week != null, "week", week);
         List<PunchCard> punchCardList = punchCardMapper.selectList(cardQueryWrapper);
         Map<Integer, List<PunchCard>> punchMap = punchCardList.stream().collect(Collectors.groupingBy(PunchCard::getWeek));
-        return Result.newInstance().success("查询打卡记录成功", punchMap);
+        return Result.newInstance().success("查询打卡记录成功", punchCardList);
     }
 
     @Override
