@@ -1,10 +1,10 @@
 package com.zhitong.loginserver.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhitong.loginserver.entity.CommonConstant;
 import com.zhitong.loginserver.entity.Result;
 import com.zhitong.loginserver.entity.User;
 import com.zhitong.loginserver.service.IUserService;
-import com.zhitong.loginserver.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +58,18 @@ public class LoginController {
     @ResponseBody
     public Result<JSONObject> toLogin(@RequestBody User loginUser) throws Exception {
         return userService.toLogin(loginUser);
+    }
+
+    /**
+     * 登出
+     * @return
+     */
+    @CrossOrigin
+    @PostMapping(value = "/loginOut")
+    @ResponseBody
+    public Result<JSONObject> loginOut(HttpServletRequest request) throws Exception {
+        String token = request.getHeader(CommonConstant.ACCESS_TOKEN);
+        return userService.loginOut(token);
     }
 
 }

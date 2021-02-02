@@ -20,4 +20,6 @@ public interface IUserService extends IService<User> {
     Result insertSelective(User user);
 
     Result<JSONObject> toLogin(User loginUser);
+
+    Result<JSONObject> loginOut(String token);
 }

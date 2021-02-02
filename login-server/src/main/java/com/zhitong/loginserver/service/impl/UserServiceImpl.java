@@ -89,9 +89,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         // 生成token
         String token = JwtUtil.sign(userName, passWord);
-        redisTemplate.opsForValue().set(token, JSON.toJSONString(user),5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(user),2, TimeUnit.HOURS);
         JSONObject obj = new JSONObject();
+        obj.put("userId",user.getId());
+        obj.put("username",user.getUsername());
         obj.put("token", token);
         return Result.newInstance().success("登录成功",obj);
+    }
+
+    @Override
+    public Result<JSONObject> loginOut(String token) {
+        Boolean bool = redisTemplate.delete(token);
+        if (bool){
+            return Result.newInstance().success("退出成功",bool);
+        }else {
+            return Result.newInstance().filed("退出失败");
+        }
     }
 }

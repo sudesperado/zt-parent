@@ -30,14 +30,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:7001/eureka/
 
-
-
 netty:
   server:
     port: 12300
     host: 172.37.0.122
 
-#�����es��Ⱥ,��","����
 elasticsearch:
   address: localhost:9200
 
