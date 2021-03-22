@@ -47,7 +47,6 @@ public class PunchCardServiceImpl extends ServiceImpl<PunchCardMapper, PunchCard
         }
         cardQueryWrapper.eq(week != null, "week", week);
         List<PunchCard> punchCardList = punchCardMapper.selectList(cardQueryWrapper);
-        Map<Integer, List<PunchCard>> punchMap = punchCardList.stream().collect(Collectors.groupingBy(PunchCard::getWeek));
         return Result.newInstance().success("查询打卡记录成功", punchCardList);
     }
 

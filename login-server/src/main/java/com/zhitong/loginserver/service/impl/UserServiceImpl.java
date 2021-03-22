@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StopWatch;
 
 import java.util.List;
 import java.util.UUID;
@@ -89,7 +90,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         // 生成token
         String token = JwtUtil.sign(userName, passWord);
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         redisTemplate.opsForValue().set(token, JSON.toJSONString(user),2, TimeUnit.HOURS);
+        stopWatch.stop();
+        System.out.println("耗时"+stopWatch.getTotalTimeSeconds());
         JSONObject obj = new JSONObject();
         obj.put("userId",user.getId());
         obj.put("username",user.getUsername());

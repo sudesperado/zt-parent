@@ -34,7 +34,7 @@ public class TransmitUserInfoFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         try {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
-            String token = request.getHeader("Access-Token");
+            String token = request.getHeader("Token");
             String userStr =(String) redisTemplate.opsForValue().get(token);
             User user = JSON.parseObject(userStr, User.class);
             UserInfoContext.setUser(user);
