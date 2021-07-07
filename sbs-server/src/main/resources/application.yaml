@@ -11,3 +11,26 @@ spring:
 
   application:
     name: login-server
+
+  kafka:
+    bootstrap-servers: 172.172.1.103:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 0
+      batch-size: 4096
+      buffer-memory: 40960
+      linger: 1
+    consumer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      zookeeper:
+        connect: 172.172.1.103:2181
+      group-id: test
+      concurrency: 10
+      session:
+        timeout: 60
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      auto-offset-reset: latest
+    topic: mqtt_location_data
