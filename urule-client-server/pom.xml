@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>com.zhitong</groupId>
-    <artifactId>sbs-server</artifactId>
+    <artifactId>urule-client-server</artifactId>
     <name>sbs-server</name>
 
     <properties>
